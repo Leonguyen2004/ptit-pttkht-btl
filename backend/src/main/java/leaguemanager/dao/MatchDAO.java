@@ -166,13 +166,18 @@ public class MatchDAO extends DAO {
             stmt.close();
 
             // 6. Insert LeagueTeamMatch
-            String sqlRelation = "INSERT INTO leagueteammatch (match_id, league_team_id) VALUES (?, ?)";
+            String sqlRelation = "INSERT INTO leagueteammatch (match_id, league_team_id, role) VALUES (?, ?, ?)";
             PreparedStatement stmtRel = dbCon.prepareStatement(sqlRelation);
 
-            for (Integer ltId : participatingTeamIds) {
-                stmtRel.setInt(1, match.getId());
-                stmtRel.setInt(2, ltId);
-                stmtRel.addBatch();
+            if (match.getLeagueTeamMatches() != null) {
+                for (LeagueTeamMatch ltm : match.getLeagueTeamMatches()) {
+                    if (ltm.getLeagueTeam() != null && ltm.getLeagueTeam().getId() != null) {
+                        stmtRel.setInt(1, match.getId());
+                        stmtRel.setInt(2, ltm.getLeagueTeam().getId());
+                        stmtRel.setString(3, ltm.getRole());
+                        stmtRel.addBatch();
+                    }
+                }
             }
             stmtRel.executeBatch();
             stmtRel.close();

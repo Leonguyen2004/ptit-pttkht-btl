@@ -5,11 +5,11 @@ import java.util.List;
 public class LeagueTeam {
 
     private Integer id;
-    private Integer wins;
-    private Integer draws;
-    private Integer losses;
-    private Integer goalsFor;      // Bàn thắng
-    private Integer goalsAgainst;  // Bàn thua
+//    private Integer wins;
+//    private Integer draws;
+//    private Integer losses;
+//    private Integer goalsFor;      // Bàn thắng
+//    private Integer goalsAgainst;  // Bàn thua
 
     // Quan hệ N-1
     private League league;
@@ -29,11 +29,6 @@ public class LeagueTeam {
                       Integer goalsFor, Integer goalsAgainst,
                       League league, Team team, List<LeagueTeamMatch> leagueTeamMatches) {
         this.id = id;
-        this.wins = wins;
-        this.draws = draws;
-        this.losses = losses;
-        this.goalsFor = goalsFor;
-        this.goalsAgainst = goalsAgainst;
         this.league = league;
         this.team = team;
         this.leagueTeamMatches = leagueTeamMatches;
@@ -47,46 +42,6 @@ public class LeagueTeam {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getWins() {
-        return wins;
-    }
-
-    public void setWins(Integer wins) {
-        this.wins = wins;
-    }
-
-    public Integer getDraws() {
-        return draws;
-    }
-
-    public void setDraws(Integer draws) {
-        this.draws = draws;
-    }
-
-    public Integer getLosses() {
-        return losses;
-    }
-
-    public void setLosses(Integer losses) {
-        this.losses = losses;
-    }
-
-    public Integer getGoalsFor() {
-        return goalsFor;
-    }
-
-    public void setGoalsFor(Integer goalsFor) {
-        this.goalsFor = goalsFor;
-    }
-
-    public Integer getGoalsAgainst() {
-        return goalsAgainst;
-    }
-
-    public void setGoalsAgainst(Integer goalsAgainst) {
-        this.goalsAgainst = goalsAgainst;
     }
 
     public League getLeague() {

@@ -72,7 +72,7 @@ export function AddMatchView({ leagueId, roundId, stadiumId }: AddMatchViewProps
             navigate({
               to: '/tournaments/$leagueId/schedule/add-match',
               params: { leagueId },
-              search: { roundId },
+              search: { roundId, stadiumId: undefined },
               replace: true,
             });
           }
@@ -206,9 +206,11 @@ export function AddMatchView({ leagueId, roundId, stadiumId }: AddMatchViewProps
         leagueTeamMatches: [
           {
             leagueTeam: formData.homeTeam!,
+            role: 'Home',
           } as LeagueTeamMatch,
           {
             leagueTeam: formData.awayTeam!,
+            role: 'Away',
           } as LeagueTeamMatch,
         ],
       };

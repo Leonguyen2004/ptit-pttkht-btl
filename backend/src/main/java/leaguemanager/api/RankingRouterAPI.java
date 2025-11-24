@@ -4,10 +4,10 @@ import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import leaguemanager.dao.RankingDAO;
 import leaguemanager.entity.League;
-import leaguemanager.entity.Ranking;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -34,6 +34,18 @@ public class RankingRouterAPI extends RouterAPI {
                     @Override
                     public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                         return LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE);
+                    }
+                })
+                .registerTypeAdapter(LocalTime.class, new JsonSerializer<LocalTime>() {
+                    @Override
+                    public JsonElement serialize(LocalTime src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_TIME));
+                    }
+                })
+                .registerTypeAdapter(LocalTime.class, new JsonDeserializer<LocalTime>() {
+                    @Override
+                    public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return LocalTime.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_TIME);
                     }
                 })
                 .create();
@@ -89,7 +101,7 @@ public class RankingRouterAPI extends RouterAPI {
             league.setId(leagueId);
 
             // Lấy danh sách Ranking
-            List<Ranking> rankings = rankingDAO.getListRankingByLeague(league);
+            List<leaguemanager.dto.RankingDTO> rankings = rankingDAO.getListRankingByLeague(league);
 
             String jsonResponse = gson.toJson(rankings);
             sendResponse(exchange, 200, jsonResponse);

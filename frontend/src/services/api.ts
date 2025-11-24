@@ -101,6 +101,21 @@ export interface Match {
   leagueTeamMatches?: LeagueTeamMatch[];
 }
 
+export interface RankingDTO {
+  teamName: string;
+  teamLogo?: string;
+  leagueTeamId: number;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalDifference: number;
+  points: number;
+  rank: number;
+}
+
 class ApiService {
   private async request<T>(
     endpoint: string,
@@ -243,6 +258,18 @@ class ApiService {
     return this.request<Stadium>('/api/stadiums', {
       method: 'POST',
       body: JSON.stringify(stadium),
+    });
+  }
+
+  async getRankingByLeague(leagueId: number): Promise<RankingDTO[]> {
+    return this.request<RankingDTO[]>(`/api/rankings?leagueId=${leagueId}`, {
+      method: 'GET',
+    });
+  }
+
+  async getMatchesByLeagueTeamId(leagueTeamId: number): Promise<Match[]> {
+    return this.request<Match[]>(`/api/matches?leagueTeamId=${leagueTeamId}`, {
+      method: 'GET',
     });
   }
 }

@@ -155,9 +155,15 @@ export function ManageLeagueView({ leagueId }: ManageLeagueViewProps) {
             )}
           </div>
 
-          <div className="tournaments-footer" style={{ justifyContent: "flex-start", marginTop: "24px" }}>
+          <div className="tournaments-footer" style={{ justifyContent: "flex-start", marginTop: "24px", gap: "12px" }}>
             <button onClick={handleManageSchedule} className="schedule-btn">
               Quản lý lịch thi đấu
+            </button>
+            <button 
+              onClick={() => navigate({ to: '/tournaments/$leagueId/ranking', params: { leagueId } })} 
+              className="schedule-btn"
+            >
+              Xem bảng xếp hạng
             </button>
           </div>
         </div>

@@ -28,7 +28,7 @@ export function HistoryMatchView({ leagueTeamId, leagueId }: HistoryMatchViewPro
           return;
         }
 
-        const data = await apiService.getMatchesByLeagueTeamId(id);
+        const data = await apiService.getMatchesByLeagueTeamId(id, 'COMPLETED');
         setMatches(data);
 
         // Extract team name from first match if available
@@ -74,8 +74,12 @@ export function HistoryMatchView({ leagueTeamId, leagueId }: HistoryMatchViewPro
       return { homeTeam: 'N/A', awayTeam: 'N/A', score: 'N/A' };
     }
 
-    const homeMatch = match.leagueTeamMatches.find(ltm => ltm.role === 'Home');
-    const awayMatch = match.leagueTeamMatches.find(ltm => ltm.role === 'Away');
+    const homeMatch = match.leagueTeamMatches.find(
+      ltm => ltm.role?.toLowerCase() === 'home'
+    );
+    const awayMatch = match.leagueTeamMatches.find(
+      ltm => ltm.role?.toLowerCase() === 'away'
+    );
 
     const homeTeam = homeMatch?.leagueTeam?.team?.fullName || 'N/A';
     const awayTeam = awayMatch?.leagueTeam?.team?.fullName || 'N/A';

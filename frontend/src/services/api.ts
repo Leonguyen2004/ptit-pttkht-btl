@@ -96,6 +96,7 @@ export interface Match {
   date: string; // Format: "yyyy-MM-dd"
   timeStart: string; // Format: "HH:mm:ss"
   description?: string;
+  status?: string;
   stadium?: Stadium;
   round?: Round;
   leagueTeamMatches?: LeagueTeamMatch[];
@@ -180,8 +181,12 @@ class ApiService {
     });
   }
 
-  async getMatchesByLeagueId(leagueId: number): Promise<Match[]> {
-    return this.request<Match[]>(`/api/matches?leagueId=${leagueId}`, {
+  async getMatchesByLeagueId(leagueId: number, status?: string): Promise<Match[]> {
+    const params = new URLSearchParams({ leagueId: leagueId.toString() });
+    if (status) {
+      params.append('status', status);
+    }
+    return this.request<Match[]>(`/api/matches?${params.toString()}`, {
       method: 'GET',
     });
   }
@@ -267,8 +272,12 @@ class ApiService {
     });
   }
 
-  async getMatchesByLeagueTeamId(leagueTeamId: number): Promise<Match[]> {
-    return this.request<Match[]>(`/api/matches?leagueTeamId=${leagueTeamId}`, {
+  async getMatchesByLeagueTeamId(leagueTeamId: number, status?: string): Promise<Match[]> {
+    const params = new URLSearchParams({ leagueTeamId: leagueTeamId.toString() });
+    if (status) {
+      params.append('status', status);
+    }
+    return this.request<Match[]>(`/api/matches?${params.toString()}`, {
       method: 'GET',
     });
   }

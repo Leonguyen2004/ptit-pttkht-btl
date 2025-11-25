@@ -42,7 +42,7 @@ public class RankingDAO extends DAO {
                     "    FROM leagueteammatch ltm " +
                     "    JOIN \"match\" m ON ltm.match_id = m.id " +
                     "    JOIN round r ON m.round_id = r.id " +
-                    "    WHERE r.league_id = ? " +
+                    "    WHERE r.league_id = ? AND m.status = 'COMPLETED' " +
                     ") " +
                     "SELECT " +
                     "    lt.id AS league_team_id, " +

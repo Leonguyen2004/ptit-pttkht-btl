@@ -8,6 +8,8 @@ import leaguemanager.entity.LeagueTeam;
 import leaguemanager.entity.Match;
 
 import java.lang.reflect.Type;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -81,6 +83,7 @@ public class MatchRouterAPI extends RouterAPI {
             String query = exchange.getRequestURI().getQuery();
             Integer leagueId = null;
             Integer leagueTeamId = null;
+            String status = null;
 
             if (query != null) {
                 String[] pairs = query.split("&");
@@ -91,6 +94,8 @@ public class MatchRouterAPI extends RouterAPI {
                             leagueId = Integer.parseInt(keyValue[1]);
                         } else if (keyValue[0].equals("leagueTeamId")) {
                             leagueTeamId = Integer.parseInt(keyValue[1]);
+                        } else if (keyValue[0].equals("status")) {
+                            status = URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8);
                         }
                     }
                 }
@@ -101,11 +106,11 @@ public class MatchRouterAPI extends RouterAPI {
             if (leagueId != null) {
                 League league = new League();
                 league.setId(leagueId);
-                matches = matchDAO.findMatchByLeague(league);
+                matches = matchDAO.findMatchByLeague(league, status);
             } else if (leagueTeamId != null) {
                 LeagueTeam lt = new LeagueTeam();
                 lt.setId(leagueTeamId);
-                matches = matchDAO.findMatchByLeagueTeam(lt);
+                matches = matchDAO.findMatchByLeagueTeam(lt, status);
             } else {
                 sendResponse(exchange, 400, "{\"error\": \"Missing required parameter: leagueId or leagueTeamId\"}");
                 return;

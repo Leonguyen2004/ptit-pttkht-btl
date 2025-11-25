@@ -10,6 +10,8 @@ public class Match {
     private LocalDate date;
     private LocalTime timeStart;
     private String description;
+    // COMPLETED or SCHEDULED
+    private String status;
 
     // Quan hệ N-1
     private Stadium stadium; // Hoặc chỉ lưu tblStadiumid (Integer)
@@ -19,11 +21,13 @@ public class Match {
     private List<LeagueTeamMatch> leagueTeamMatches;
 
     // --- Constructors ---
-    public Match(Integer id, LocalDate date, LocalTime timeStart, String description, Stadium stadium, Round round, List<LeagueTeamMatch> leagueTeamMatches) {
+    public Match(Integer id, LocalDate date, LocalTime timeStart, String description, String status,
+                 Stadium stadium, Round round, List<LeagueTeamMatch> leagueTeamMatches) {
         this.id = id;
         this.date = date;
         this.timeStart = timeStart;
         this.description = description;
+        this.status = status;
         this.stadium = stadium;
         this.round = round;
         this.leagueTeamMatches = leagueTeamMatches;
@@ -63,6 +67,14 @@ public class Match {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Stadium getStadium() {
